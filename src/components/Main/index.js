@@ -18,6 +18,28 @@ class Main extends Component {
     }
   }
 
+  componentDidMount(){
+    this.starttimer()
+  }
+  
+  starttimer = () => {
+    this.timer = setInterval(() => {
+      const {originalList} = this.state
+      this.setState(
+        prevState => ({
+          timer: prevState.timer > 0 ? prevState.timer - 1 : 0,
+          isGameOn: prevState.timer > 0,
+        }),
+
+        () => {
+          if (this.state.timer === 0) {
+            clearInterval(this.timer)
+          }
+        },
+      )
+    }, 1000)
+  }
+  
   
 
   changeList = tabId => {
@@ -60,21 +82,7 @@ class Main extends Component {
       this.state
     const imagesList2 = imagesList.filter(each => each.category === activeId)
 
-    this.timer = setInterval(() => {
-      const {originalList} = this.state
-      this.setState(
-        prevState => ({
-          timer: prevState.timer > 0 ? prevState.timer - 1 : 0,
-          isGameOn: prevState.timer > 0,
-        }),
-
-        () => {
-          if (this.state.timer === 0) {
-            clearInterval(this.timer)
-          }
-        },
-      )
-    }, 1000)
+    
 
 
     return (
